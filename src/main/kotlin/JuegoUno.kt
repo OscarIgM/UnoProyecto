@@ -3,6 +3,8 @@ class JuegoUno {
         val juegoUno = JuegoUno()
         val mazo = juegoUno.crearMazoCartas()
         println("¡Bienvenido al juego Uno!")
+        println("Mazo =" +mazo+"\n" +  mazo.get(1).name)
+
     }
     fun crearMazoCartas():MutableList<Cartas>{
         val mazoCartas= mutableListOf<Cartas>()
