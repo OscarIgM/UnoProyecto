@@ -1,2 +1,2 @@
-class Jugador (val nombre: String, val mano:Carta){
+class Jugador (val nombre: String, val mano:MutableList<Carta>){
 }
