@@ -1,19 +1,36 @@
+import java.util.Collections
+import java.util.LinkedList
+
 class JuegoUno {
+    val mazo: LinkedList<Carta> = LinkedList()
+
+    init {
+        // Agregar las cartas al mazo
+        UnoCartas.values().forEach { carta ->
+            mazo.add(Carta(carta.valor, carta.color))
+        }
+    }
     fun main() {
-        val juegoUno = JuegoUno()
-        val mazo = juegoUno.crearMazoCartas()
+revolverMazo(mazo)
         println("¡Bienvenido al juego Uno!")
-        println("Mazo =" +mazo+"\n" +  mazo.get(1).name)
+
 
     }
-    fun crearMazoCartas():MutableList<Cartas>{
-        val mazoCartas= mutableListOf<Cartas>()
-        mazoCartas.addAll(Cartas.values());
-        return mazoCartas
+    fun repartirCartas(jugadores: List<Jugador>) {
+        repeat(7) {
+            for (jugador in jugadores) {
+                val carta = mazo.removeFirst()
+                jugador.mano.add(carta)
+            }
+        }
     }
-
 }
+
+
 fun main() {
     val main = JuegoUno()
     main.main()
+}
+fun revolverMazo( mazo:LinkedList<Carta>){
+    mazo.shuffle();
 }

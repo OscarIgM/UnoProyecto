@@ -1,4 +1,4 @@
-enum class Cartas (val valor: Int, val color: String){
+enum class UnoCartas (val valor: Int, val color: String){
     // Cartas ROJAS
     ROJOCERO(0, "Rojo"), ROJOUNO(1, "Rojo"), ROJODOS(2, "Rojo"), ROJOTRES(3, "Rojo"), ROJOCUATRO(4, "Rojo"), ROJOCINCO(5, "Rojo"),
     ROJOSEIS(6, "Rojo"), ROJOSIETE(7, "Rojo"), ROJOOCHO(8, "Rojo"), ROJONUEVE(9, "Rojo"),
