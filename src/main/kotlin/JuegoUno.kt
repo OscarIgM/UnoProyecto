@@ -18,7 +18,10 @@ revolverMazo(mazo)
         val jugadorUno= jugador1?.let { Jugador(it) };
         println("Ingrese nombre jugador 2")
         val jugador2= readLine();
+        val jugadorDos= jugador2?.let { Jugador(it) };
         println("Los jugadores son"+jugador1+" /" + jugador2);
+
+
 
 
     }
