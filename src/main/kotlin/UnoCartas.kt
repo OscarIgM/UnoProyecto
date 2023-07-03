@@ -16,10 +16,9 @@ enum class UnoCartas (val valor: Int, val color: String){
     AMARILLOSEIS(6, "Amarillo"), AMARILLOSIETE(7, "AMARILLO"), AMARILLOOCHO(8, "Amarillo"), AMARILLONUEVE(9, "Amarillo"),
     // Cartas Amarillas especiales
     AMARILLOREVERSA(20, "Amarillo"), AMARILLOSALTO(20, "Amarillo"), AMARILLODOSMAS(20, "Amarillo"),
-
     // Cartas Verdes
     VERDECERO(0, "Verde"), VERDEUNO(1, "Verde"), VERDEDOS(2, "Verde"), VERDETRES(3, "Verde"), VERDECUATRO(4, "VERDE"), VERDECINCO(5, "Verde"),
-    VERDESEIS(6, "Verde"), VERDESIETE(7, "VERDE"), VERDEOCHO(8, "Verde"), VERDENUEVE(9, "Verde"),
+    VERDESEIS(6, "Verde"), VERDESIETE(7, "Verde"), VERDEOCHO(8, "Verde"), VERDENUEVE(9, "Verde"),
     // Cartas Verdes especiales
     VERDEREVERSA(20, "Verde"), VERDESALTO(20, "Verde"), VERDEDOSMAS(20, "Verde"),
 

@@ -13,6 +13,12 @@ class JuegoUno {
     fun main() {
 revolverMazo(mazo)
         println("¡Bienvenido al juego Uno!")
+        println("Ingrese nombre jugador 1")
+        val jugador1= readLine();
+        val jugadorUno= jugador1?.let { Jugador(it) };
+        println("Ingrese nombre jugador 2")
+        val jugador2= readLine();
+        println("Los jugadores son"+jugador1+" /" + jugador2);
 
 
     }
