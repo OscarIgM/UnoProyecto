@@ -12,18 +12,26 @@ class JuegoUno {
     }
     fun main() {
 revolverMazo(mazo)
+        val jugadores: MutableList<Jugador> = mutableListOf() // Crear una lista vacía
+
         println("¡Bienvenido al juego Uno!")
         println("Ingrese nombre jugador 1")
         val jugador1= readLine();
-        val jugadorUno= jugador1?.let { Jugador(it) };
+        val jugadorUno = Jugador(jugador1 ?: "")
         println("Ingrese nombre jugador 2")
         val jugador2= readLine();
         val jugadorDos= jugador2?.let { Jugador(it) };
         println("Los jugadores son"+jugador1+" /" + jugador2);
+jugadores.add(jugadorUno);
+        repartirCartas(jugadores)
+        verMano(jugadorUno);
 
-
-
-
+    }
+    fun verMano(jugador: Jugador) {
+        println("Mano del jugador ${jugador.nombre}:")
+        for (carta in jugador.mano) {
+            println(carta.toString())
+        }
     }
     fun repartirCartas(jugadores: List<Jugador>) {
         repeat(7) {
