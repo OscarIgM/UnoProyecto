@@ -3,7 +3,7 @@ enum class UnoCartas (val valor: Int, val color: String){
     ROJOCERO(0, "Rojo"), ROJOUNO(1, "Rojo"), ROJODOS(2, "Rojo"), ROJOTRES(3, "Rojo"), ROJOCUATRO(4, "Rojo"), ROJOCINCO(5, "Rojo"),
     ROJOSEIS(6, "Rojo"), ROJOSIETE(7, "Rojo"), ROJOOCHO(8, "Rojo"), ROJONUEVE(9, "Rojo"),
     // Cartas ROJAS especiales
-    REVERSA(20, "ROJO"), SALTO(20, "ROJO"), DOSMAS(20, "ROJO"),
+    REVERSA(20, "Rojo"), SALTO(20, "Rojo"), DOSMAS(20, "Rojo"),
 
     // Cartas Azules
     AZULCERO(0, "Azul"), AZULUNO(1, "Azul"), AZULDOS(2, "Azul"), AZULTRES(3, "Azul"), AZULCUATRO(4, "AZUL"), AZULCINCO(5, "Azul"),
@@ -12,8 +12,8 @@ enum class UnoCartas (val valor: Int, val color: String){
     AZULREVERSA(20, "Azul"), AZULSALTO(20, "Azul"), AZULDOSMAS(20, "Azul"),
 
     // Cartas Amarillas
-    AMARILLOCERO(0, "Amarillo"), AMARILLOUNO(1, "Amarillo"), AMARILLODOS(2, "Amarillo"), AMARILLOTRES(3, "Amarillo"), AMARILLOCUATRO(4, "AMARILLO"), AMARILLOCINCO(5, "Amarillo"),
-    AMARILLOSEIS(6, "Amarillo"), AMARILLOSIETE(7, "AMARILLO"), AMARILLOOCHO(8, "Amarillo"), AMARILLONUEVE(9, "Amarillo"),
+    AMARILLOCERO(0, "Amarillo"), AMARILLOUNO(1, "Amarillo"), AMARILLODOS(2, "Amarillo"), AMARILLOTRES(3, "Amarillo"), AMARILLOCUATRO(4, "Amarillo"), AMARILLOCINCO(5, "Amarillo"),
+    AMARILLOSEIS(6, "Amarillo"), AMARILLOSIETE(7, "Amarillo"), AMARILLOOCHO(8, "Amarillo"), AMARILLONUEVE(9, "Amarillo"),
     // Cartas Amarillas especiales
     AMARILLOREVERSA(20, "Amarillo"), AMARILLOSALTO(20, "Amarillo"), AMARILLODOSMAS(20, "Amarillo"),
     // Cartas Verdes

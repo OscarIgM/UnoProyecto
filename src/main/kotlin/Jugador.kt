@@ -14,6 +14,16 @@ class Jugador(val nombre: String) {
             // Turno jugador 2
         }
     }
+    fun elegirCarta(): Carta? {
+        println("Mano del jugador $nombre:")
+        for ((index, carta) in mano.withIndex()) {
+            println("${index + 1}. $carta")
+        }
+        println("Seleccione el número de la carta que desea jugar:")
+        val seleccion = readLine()?.toIntOrNull()
+
+        return seleccion?.let { mano.getOrNull(it - 1) }
+    }
 
 
 
