@@ -20,27 +20,53 @@ class JuegoUno {
         val jugadorUno = Jugador(jugador1 ?: "")
         println("Ingrese nombre jugador 2")
         val jugador2= readLine();
-        val jugadorDos= jugador2?.let { Jugador(it) };
-        println("Los jugadores son"+jugador1+" /" + jugador2);
+        val jugadorDos= Jugador(jugador2?:"")
+        println("Los jugadores son$jugador1 /$jugador2");
 jugadores.add(jugadorUno);
-
+        jugadores.add(jugadorDos)
         repartirCartas(jugadores)
         verMano(jugadorUno)
         moverUltimaCarta()
+
         var i = 0
-        val resto: Int
-        resto = i % 2
         // Lógica de juego
-        if (resto == 0) {
-            // Turno jugador 1
+        var continuarJuego = true
+        while (continuarJuego) {
+            val resto: Int
 
+            resto = i % 2
 
+            if (resto == 0) {
+                // Turno jugador 1
+                val carta = jugadorUno.elegirCarta()
+                if (carta != null) {
+                    if (validarJugada(carta, deposito.last)) {
+                        println("Jugada realizada crack makina fiera")
 
+                    }
+                } else {
+                    println("Tas re loco")
+                }
 
-        } else {
-            // Turno jugador 2
-           // jugadorDos.jugar();
-        }
+            }
+            if(resto==1) {
+                // Turno jugador 2
+val carta2=jugadorDos.elegirCarta()
+                if (carta2 != null) {
+                    if (validarJugada(carta2, deposito.last)) {
+                        println("Jugada realizada crack makina fiera")
+
+                    }
+                } else {
+                    println("Tas re loco")
+                }
+
+            }
+            if (jugadorUno.mano.isEmpty()||jugadorDos.mano.isEmpty()) {
+                continuarJuego = false
+                break
+            }
+        i++}
     }
     fun moverUltimaCarta() {
         if (mazo.isNotEmpty()) {
