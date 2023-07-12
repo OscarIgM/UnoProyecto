@@ -3,7 +3,8 @@ import java.util.*
 class JuegoUno {
     val mazo: LinkedList<Carta> = LinkedList()
     val deposito: LinkedList<Carta> = LinkedList()
-    val registroJugadas = ManejoArchivos("registro de partidas.txt");
+    val registroJugadas: ManejoArchivos = ManejoArchivos("registro_de_partidas.txt");
+
 
     init {
         // Agregar las cartas al mazo
@@ -14,6 +15,7 @@ class JuegoUno {
     }
 
     fun main() {
+        registroJugadas.crearArchivo()
         //Registro Jugadores
         val jugadores: MutableList<Jugador> = mutableListOf()
         println("¡Bienvenido al juego Uno!")
@@ -49,11 +51,20 @@ class JuegoUno {
                     jugador.calcularPuntaje()
                 }
                 if (jugadorUno.mano.isEmpty() && jugadorDos.mano.isEmpty()) {
-                    registroJugadas.escribirEnArchivo("Empate : ${jugadorUno.nombre} : ${jugadorUno.puntaje}\n Empate: ${jugadorDos.nombre} : ${jugadorDos.puntaje}")
+                    registroJugadas.escribirEnArchivo(
+                        "Empate : ${jugadorUno.nombre} : ${jugadorUno.puntaje}\n" +
+                                "Empate: ${jugadorDos.nombre} : ${jugadorDos.puntaje}\n"
+                    )
                 } else if (jugadorDos.mano.isEmpty()) {
-                    registroJugadas.escribirEnArchivo("Ganador: ${jugadorDos.nombre} : ${jugadorDos.puntaje}\n Perdedor: ${jugadorUno.nombre} : ${jugadorUno.puntaje}")
+                    registroJugadas.escribirEnArchivo(
+                        "Ganador: ${jugadorDos.nombre} : ${jugadorDos.puntaje}\n" +
+                                "Perdedor: ${jugadorUno.nombre} : ${jugadorUno.puntaje}\n"
+                    )
                 } else if (jugadorUno.mano.isEmpty()) {
-                    registroJugadas.escribirEnArchivo("Ganador: ${jugadorUno.nombre} : ${jugadorUno.puntaje}\n Perdedor: ${jugadorDos.nombre} : ${jugadorDos.puntaje}")
+                    registroJugadas.escribirEnArchivo(
+                        "Ganador: ${jugadorUno.nombre} : ${jugadorUno.puntaje}\n" +
+                                "Perdedor: ${jugadorDos.nombre} : ${jugadorDos.puntaje}\n"
+                    )
                 }
                 break
             }
@@ -93,11 +104,20 @@ class JuegoUno {
                         jugador.calcularPuntaje()
                     }
                     if (jugadorActual.puntaje == oponente.puntaje) {
-                        registroJugadas.escribirEnArchivo("Empate : ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n Empate: ${oponente.nombre} : ${oponente.puntaje}\n")
+                        registroJugadas.escribirEnArchivo(
+                            "Empate : ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n" +
+                                    "Empate: ${oponente.nombre} : ${oponente.puntaje}\n"
+                        )
                     } else if (jugadorActual.puntaje > oponente.puntaje) {
-                        registroJugadas.escribirEnArchivo("Ganador: ${oponente.nombre} : ${oponente.puntaje}\n Perdedor: ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n")
+                        registroJugadas.escribirEnArchivo(
+                            "Ganador: ${oponente.nombre} : ${oponente.puntaje}\n" +
+                                    "Perdedor: ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n"
+                        )
                     } else {
-                        registroJugadas.escribirEnArchivo("Ganador: ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n Perdedor: ${oponente.nombre} : ${oponente.puntaje}\n")
+                        registroJugadas.escribirEnArchivo(
+                            "Ganador: ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n" +
+                                    "Perdedor: ${oponente.nombre} : ${oponente.puntaje}\n"
+                        )
                     }
                     continuar = false
                 }
@@ -121,11 +141,10 @@ class JuegoUno {
     fun turno(jugadorActual: Jugador, oponente: Jugador) {
         //Agregar accion cartas especiales
         val carta = jugadorActual.elegirCarta()
-        if (carta != null) {
-            botarCarta(carta, jugadorActual)
-        }
+
         if (carta != null) {
             if (validarJugada(carta, deposito.last)) {//quedo horrible pero sirve
+                botarCarta(carta, jugadorActual)
                 if ((carta.nombre == UnoCartas.AMARILLODOSMAS.name) ||
                     (carta.nombre == UnoCartas.AZULDOSMAS.name) ||
                     (carta.nombre == UnoCartas.VERDEDOSMAS.name) ||
@@ -145,11 +164,11 @@ class JuegoUno {
                     //carta.accionSalto(turno, jugadores )ESTO NO ESTA D:
                 }
                 println("Jugada realizada crack makina fiera")
-
             }
         } else {
             println("Tas re loco, next")
         }
+
     }
 
     fun sacarCarta(mazo: LinkedList<Carta>, jugador: Jugador) {
@@ -182,20 +201,14 @@ class JuegoUno {
     }
 
     fun validarJugada(cartaSeleccionada: Carta, ultimaCarta: Carta): Boolean {
-        if (cartaSeleccionada.color == ultimaCarta.color || cartaSeleccionada.valor == ultimaCarta.valor) {
+        if (cartaSeleccionada.color == ultimaCarta.color ||
+            cartaSeleccionada.valor == ultimaCarta.valor ||
+            cartaSeleccionada.color == "Cambio"
+        ) {
             return true
         }
-
         println("La carta seleccionada no se puede jugar sobre la última carta.")
         return false
-    }
-
-    fun aplicarCartaMasDos(jugadorActual: Jugador, jugadorRival: Jugador) {
-        for (i in 1..2) {
-            val carta = mazo.removeLast()
-            jugadorRival.mano.add(carta)
-        }
-        println("Se han sumado 2 cartas al jugador rival (${jugadorRival.nombre}).")
     }
 
     fun repartirCartas(jugadores: List<Jugador>) {
@@ -227,9 +240,7 @@ class JuegoUno {
         } while (nombre.isNullOrEmpty())
         return nombre
     }
-
 }
-
 
 fun main() {
     val main = JuegoUno()
