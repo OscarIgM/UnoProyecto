@@ -69,9 +69,19 @@ class JuegoUno {
                 if ((carta.nombre == UnoCartas.AMARILLODOSMAS.name) ||
                     (carta.nombre == UnoCartas.AZULDOSMAS.name) ||
                     (carta.nombre == UnoCartas.VERDEDOSMAS.name) ||
-                    (carta.nombre == UnoCartas.AMARILLODOSMAS.name)
+                    (carta.nombre == UnoCartas.ROJODOSMAS.name)
                 ){
 carta.accionDosMas(oponente,mazo)
+                }
+                if (carta.nombre==UnoCartas.MAS4.name){
+                    carta.accionMasCuatro(oponente,mazo)
+                }
+                if (carta.nombre==UnoCartas.COLOR_CAMBIO.name){
+                    carta.accionCambioColor()
+                }
+                if (carta.nombre==UnoCartas.AMARILLOSALTO.name||carta.nombre==UnoCartas.ROJOSALTO.name||
+                    carta.nombre==UnoCartas.AZULSALTO.name||carta.nombre==UnoCartas.VERDESALTO.name){
+                    //carta.accionSalto(turno, jugadores )ESTO NO ESTA D:
                 }
                 println("Jugada realizada crack makina fiera")
 
