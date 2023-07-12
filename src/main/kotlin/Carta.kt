@@ -1,6 +1,6 @@
 import java.util.*
 
-class Carta(val nombre: String, val valor: Int, val color: String) {
+class Carta(var nombre: String, val valor: Int, val color: String) {
 
     //fun accionReversa() {}
 
@@ -14,9 +14,12 @@ class Carta(val nombre: String, val valor: Int, val color: String) {
 
     fun accionDosMas(receptor: Jugador, mazo: LinkedList<Carta>) {
         for (i in 1..2) {
-            val nuevaCarta = mazo.get(i)
-            receptor.mano.add(nuevaCarta)
-            mazo.remove(nuevaCarta)
+            val nuevaCarta1 = mazo.first()
+            receptor.mano.add(nuevaCarta1)
+            mazo.remove(nuevaCarta1)
+            val nuevaCarta2 = mazo.first()
+            receptor.mano.add(nuevaCarta2)
+            mazo.remove(nuevaCarta2)
             return
         }
     }

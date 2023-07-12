@@ -65,11 +65,19 @@ class JuegoUno {
         //Agregar accion cartas especiales
         val carta = jugadorActual.elegirCarta()
         if (carta != null) {
-            if (validarJugada(carta, deposito.last)) {
+            if (validarJugada(carta, deposito.last)) {//quedo horrible pero sirve
+                if ((carta.nombre == UnoCartas.AMARILLODOSMAS.name) ||
+                    (carta.nombre == UnoCartas.AZULDOSMAS.name) ||
+                    (carta.nombre == UnoCartas.VERDEDOSMAS.name) ||
+                    (carta.nombre == UnoCartas.AMARILLODOSMAS.name)
+                ){
+carta.accionDosMas(oponente,mazo)
+                }
                 println("Jugada realizada crack makina fiera")
+
             }
         } else {
-            println("Tas re loco")
+            println("Tas re loco, next")
         }
     }
 
@@ -91,6 +99,13 @@ class JuegoUno {
 
         println("La carta seleccionada no se puede jugar sobre la última carta.")
         return false
+    }
+    fun aplicarCartaMasDos(jugadorActual: Jugador, jugadorRival: Jugador) {
+        for (i in 1..2) {
+            val carta = mazo.removeLast()
+            jugadorRival.mano.add(carta)
+        }
+        println("Se han sumado 2 cartas al jugador rival (${jugadorRival.nombre}).")
     }
     fun repartirCartas(jugadores: List<Jugador>) {
         repeat(7) {
@@ -126,6 +141,3 @@ fun main() {
     val main = JuegoUno()
     main.main()
 }
-
-
-
