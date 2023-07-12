@@ -1,5 +1,4 @@
-import java.util.Collections
-import java.util.LinkedList
+import java.util.*
 
 class JuegoUno {
     val mazo: LinkedList<Carta> = LinkedList()
@@ -37,11 +36,12 @@ class JuegoUno {
 
             // Turno jugador 1
             if (resto == 0) {
-                turno(jugadorUno, jugadorDos)
+                continuarJuego = menuTurno(jugadorUno, jugadorDos, jugadores)
+
             }
             // Turno jugador 2
             if (resto == 1) {
-                turno(jugadorDos, jugadorUno)
+                continuarJuego = menuTurno(jugadorDos, jugadorUno, jugadores)
             }
             // Terminar juego
             if (jugadorUno.mano.isEmpty() || jugadorDos.mano.isEmpty()) {
@@ -61,26 +61,88 @@ class JuegoUno {
             i++
         }
     }
-    fun turno(jugadorActual: Jugador, oponente: Jugador){
+
+    fun menuTurno(jugadorActual: Jugador, oponente: Jugador, jugadores: List<Jugador>): Boolean {
+        var opcion: String
+        var continuar = true
+
+        println("---- Menú ----")
+        verUltimaCartaEnDeposito()
+        jugadorActual.verMano()
+
+        do {
+            println("---- Seleccione una opcion ----")
+            println("q. Tirar carta")
+            println("z. Sacar carta")
+            println("x. Salir sin terminar la partida")
+            print("Ingrese una opción: ")
+
+            opcion = readLine()?.uppercase(Locale.getDefault()) ?: ""
+
+            when (opcion) {
+
+                "Q" -> {
+                    verUltimaCartaEnDeposito()
+                    turno(jugadorActual, oponente)
+                    println("Turno terminado")
+                    opcion = "X"
+                }
+
+                "X" -> {
+                    println("Salir")
+                    for (jugador in jugadores) {
+                        jugador.calcularPuntaje()
+                    }
+                    if (jugadorActual.puntaje == oponente.puntaje) {
+                        registroJugadas.escribirEnArchivo("Empate : ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n Empate: ${oponente.nombre} : ${oponente.puntaje}\n")
+                    } else if (jugadorActual.puntaje > oponente.puntaje) {
+                        registroJugadas.escribirEnArchivo("Ganador: ${oponente.nombre} : ${oponente.puntaje}\n Perdedor: ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n")
+                    } else {
+                        registroJugadas.escribirEnArchivo("Ganador: ${jugadorActual.nombre} : ${jugadorActual.puntaje}\n Perdedor: ${oponente.nombre} : ${oponente.puntaje}\n")
+                    }
+                    continuar = false
+                }
+
+                "Z" -> {
+                    println("+ Carta agregada a tu mano")
+                    sacarCarta(mazo, jugadorActual)
+                    println("Turno terminado")
+                    opcion = "X"
+                }
+
+                else -> {
+                    println("Opción inválida. Por favor, seleccione una opción válida.")
+                }
+            }
+            println()
+        } while (opcion != "X")
+        return continuar
+    }
+
+    fun turno(jugadorActual: Jugador, oponente: Jugador) {
         //Agregar accion cartas especiales
         val carta = jugadorActual.elegirCarta()
+        if (carta != null) {
+            botarCarta(carta, jugadorActual)
+        }
         if (carta != null) {
             if (validarJugada(carta, deposito.last)) {//quedo horrible pero sirve
                 if ((carta.nombre == UnoCartas.AMARILLODOSMAS.name) ||
                     (carta.nombre == UnoCartas.AZULDOSMAS.name) ||
                     (carta.nombre == UnoCartas.VERDEDOSMAS.name) ||
                     (carta.nombre == UnoCartas.ROJODOSMAS.name)
-                ){
-carta.accionDosMas(oponente,mazo)
+                ) {
+                    carta.accionDosMas(oponente, mazo)
                 }
-                if (carta.nombre==UnoCartas.MAS4.name){
-                    carta.accionMasCuatro(oponente,mazo)
+                if (carta.nombre == UnoCartas.MAS4.name) {
+                    carta.accionMasCuatro(oponente, mazo)
                 }
-                if (carta.nombre==UnoCartas.COLOR_CAMBIO.name){
+                if (carta.nombre == UnoCartas.COLOR_CAMBIO.name) {
                     carta.accionCambioColor()
                 }
-                if (carta.nombre==UnoCartas.AMARILLOSALTO.name||carta.nombre==UnoCartas.ROJOSALTO.name||
-                    carta.nombre==UnoCartas.AZULSALTO.name||carta.nombre==UnoCartas.VERDESALTO.name){
+                if (carta.nombre == UnoCartas.AMARILLOSALTO.name || carta.nombre == UnoCartas.ROJOSALTO.name ||
+                    carta.nombre == UnoCartas.AZULSALTO.name || carta.nombre == UnoCartas.VERDESALTO.name
+                ) {
                     //carta.accionSalto(turno, jugadores )ESTO NO ESTA D:
                 }
                 println("Jugada realizada crack makina fiera")
@@ -89,6 +151,16 @@ carta.accionDosMas(oponente,mazo)
         } else {
             println("Tas re loco, next")
         }
+    }
+
+    fun sacarCarta(mazo: LinkedList<Carta>, jugador: Jugador) {
+        jugador.mano.add(mazo.last)
+        mazo.removeLast()
+    }
+
+    fun botarCarta(cartaSeleccionada: Carta, jugador: Jugador) {
+        jugador.mano.remove(cartaSeleccionada)
+        deposito.add(cartaSeleccionada)
     }
 
     fun moverUltimaCarta() {
@@ -102,6 +174,14 @@ carta.accionDosMas(oponente,mazo)
         }
     }
 
+    fun verUltimaCartaEnDeposito() {
+        if (deposito.isNullOrEmpty()) {
+            println("No hay cartas en el deposito")
+        } else {
+            println("Última carta en depósito: ${deposito.last}")
+        }
+    }
+
     fun validarJugada(cartaSeleccionada: Carta, ultimaCarta: Carta): Boolean {
         if (cartaSeleccionada.color == ultimaCarta.color || cartaSeleccionada.valor == ultimaCarta.valor) {
             return true
@@ -110,6 +190,7 @@ carta.accionDosMas(oponente,mazo)
         println("La carta seleccionada no se puede jugar sobre la última carta.")
         return false
     }
+
     fun aplicarCartaMasDos(jugadorActual: Jugador, jugadorRival: Jugador) {
         for (i in 1..2) {
             val carta = mazo.removeLast()
@@ -117,6 +198,7 @@ carta.accionDosMas(oponente,mazo)
         }
         println("Se han sumado 2 cartas al jugador rival (${jugadorRival.nombre}).")
     }
+
     fun repartirCartas(jugadores: List<Jugador>) {
         repeat(7) {
             for (jugador in jugadores) {
@@ -125,16 +207,19 @@ carta.accionDosMas(oponente,mazo)
             }
         }
     }
-    fun transferirCartasDeDepositoAMazo(){
+
+    fun transferirCartasDeDepositoAMazo() {
         //Pasa las cartas que hay en depósito a mazo y las elimina del depósito. Usar cuando se acaben cartas en mazo
-        for (carta in deposito){
+        for (carta in deposito) {
             mazo.addAll(deposito)
             deposito.clear()
         }
     }
+
     fun revolverMazo(mazo: LinkedList<Carta>) {
         mazo.shuffle();
     }
+
     fun escribirNombre(texto: String): String {
         var nombre: String?
         do {
